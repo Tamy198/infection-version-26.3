@@ -1,7 +1,7 @@
 package me.toma198.infection;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerJoinEvent;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.audience.ForwardingAudience;
 
 import java.util.ArrayList;
 import java.util.Collections;
