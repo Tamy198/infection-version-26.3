@@ -51,7 +51,7 @@ public class Game {
     public void assignInfected(int infectedCount) {
         Collections.shuffle(players);
         infected = players.subList(0, infectedCount);
-        if (infectedCount > 1) {
+        if (players.size() > 1) {
             innocents = players.subList(infectedCount, players.size());
         }
     }
