@@ -1,7 +1,10 @@
 name: infection
 description: $description
-version: '${version}'
+version: '1.0-SNAPSHOT'
 
 main: me.toma198.infection.Infection
 api-version: '26.3'
 load: POSTWORLD
+authors:
+  - toma198
+website: https://github.com/Tamy198/infection-version-26.3
