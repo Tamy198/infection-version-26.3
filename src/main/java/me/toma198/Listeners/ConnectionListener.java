@@ -15,13 +15,13 @@ public class ConnectionListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        gameState.addPlayer(e.getPlayer().getUniqueId());
+        gameState.addToPlayers(e.getPlayer().getUniqueId());
         System.out.println("Added player");
     }
 
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
-        gameState.removePlayer(e.getPlayer().getUniqueId());
+        gameState.removeFromPlayers(e.getPlayer().getUniqueId());
         System.out.println("Removed player");
     }
 }

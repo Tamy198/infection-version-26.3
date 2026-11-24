@@ -1,6 +1,8 @@
 package me.toma198.infection;
 
 import me.toma198.Listeners.ConnectionListener;
+import me.toma198.Listeners.DeathListener;
+import me.toma198.Listeners.RespawnListener;
 import me.toma198.commands.InfectionCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,7 +18,22 @@ public class Infection extends JavaPlugin {
 
         registerCommand("infection", List.of("i"), new InfectionCommand(this, gameState));
 
+        DeathListener deathListener = new DeathListener(gameState, this);
+
+        InfectedDeath infectedDeath = new InfectedDeath();
+        deathListener.addDeathObserver(infectedDeath);
+        InnocentDeath innocentDeath = new InnocentDeath();
+        deathListener.addDeathObserver(innocentDeath);
+
+        RespawnListener respawnListener = new RespawnListener(gameState, this);
+
+        Conversion conversion = new Conversion();
+        respawnListener.addRespawnObserver(conversion);
+
+        // Register listeners
         getServer().getPluginManager().registerEvents(new ConnectionListener(gameState), this);
+        getServer().getPluginManager().registerEvents(deathListener, this);
+        getServer().getPluginManager().registerEvents(respawnListener, this);
     }
 
     @Override

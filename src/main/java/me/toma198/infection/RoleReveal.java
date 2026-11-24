@@ -12,8 +12,6 @@ import org.bukkit.plugin.Plugin;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class RoleReveal {
     private final Plugin plugin;
@@ -23,12 +21,12 @@ public class RoleReveal {
     }
 
     public void revealRole(Game gameState) {
-        List<Player> players = toPlayerObjectList(gameState.getPlayers());
-        List<Player> imposterList = toPlayerObjectList(gameState.getInfected());
+        List<Player> players = gameState.toPlayerObjectList(gameState.getPlayers());
+        List<Player> imposterList = gameState.toPlayerObjectList(gameState.getInfected());
 
         List<Player> innocentList;
         if (players.size() > 1) {
-            innocentList = toPlayerObjectList(gameState.getInnocents());
+            innocentList = gameState.toPlayerObjectList(gameState.getInnocents());
         } else {
             innocentList = new ArrayList<>();
         }
@@ -78,13 +76,15 @@ public class RoleReveal {
                             imposterReveal.append(imposter.getName());
                         }
 
+                        // TODO: comma in name
                         if (imposterReveal.lastIndexOf(",") != -1) {
                             imposterReveal.deleteCharAt(imposterReveal.lastIndexOf(","));
                         }
 
                         // Then send the reveal message to imposters
                         for (Player player : imposterList) {
-                            player.sendMessage(Component.text(imposterReveal.toString()));
+                            player.sendMessage(Component.text(imposterReveal.toString())
+                                    .color(NamedTextColor.RED));
                         }
                         System.out.println("Executed after 4 second delay!");
 
@@ -97,12 +97,6 @@ public class RoleReveal {
                 }, 20L); // 1+1+1 second
             }, 20L); // 1+1 second delay
         }, 20L); // 1 second delay
-    }
-
-    private List<Player> toPlayerObjectList(List<UUID> playerList) {
-        return playerList.stream()
-                .map(Bukkit::getPlayer)
-                .collect(Collectors.toList());
     }
 
     // Send role information to players
