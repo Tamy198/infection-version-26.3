@@ -1,5 +1,7 @@
 package me.toma198.infection;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -13,6 +15,7 @@ public class Conversion implements RespawnObserver {
     public void onRespawnEvent(Player player, Game gameState, Plugin plugin) {
         System.out.println("In conversion class");
         System.out.println(player.getUniqueId());
+        System.out.println("Player list: " + gameState.getPlayers());
         System.out.println("Infected list: " + gameState.getInfected());
         System.out.println("Conversion list: " + gameState.getConversionList());
         //System.out.println("Innocent list: " + gameState.getInnocents());
@@ -43,13 +46,27 @@ public class Conversion implements RespawnObserver {
         // Join the imposter team
         gameState.addToInfected(player.getUniqueId());
 
+        // TODO: work out how to remove players from the innocents team
+        //gameState.removeFromInnocents(player.getUniqueId());
+
         // Conversion lasts 30 seconds
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             System.out.println("Executed potion removal after 30 seconds!");
             player.removePotionEffect(PotionEffectType.SLOWNESS);
             player.removePotionEffect(PotionEffectType.RESISTANCE);
             player.removePotionEffect(PotionEffectType.REGENERATION);
-            gameState.removeFromInnocents(player.getUniqueId());
+
+            System.out.println("Player list: " + gameState.getPlayers());
+            System.out.println("Infected list: " + gameState.getInfected());
+            System.out.println("Conversion list: " + gameState.getConversionList());
+            //System.out.println("Innocent list: " + gameState.getInnocents());
+
+            // Inform if imposters have won
+            if (gameState.getInfected().size() == gameState.getPlayers().size()) {
+                for (Player p : gameState.toPlayerObjectList(gameState.getPlayers())) {
+                    p.sendMessage(Component.text("Imposters have won!").color(NamedTextColor.RED));
+                }
+            }
         }, 600L);
     }
 

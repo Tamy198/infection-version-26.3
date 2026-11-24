@@ -6,9 +6,6 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.List;
-import java.util.UUID;
-
 public class InfectedDeath implements DeathObserver {
     @Override
     public void onDeathEvent(Player player, Game gameState, Plugin plugin) {
@@ -24,6 +21,7 @@ public class InfectedDeath implements DeathObserver {
         System.out.println(gameState.getInfected());
 
         if (gameState.getInfected().isEmpty()) {
+            System.out.println("1.Hi");
             for (Player p : gameState.toPlayerObjectList(gameState.getPlayers())) {
                 p.sendMessage(Component.text("Innocents have won!").color(NamedTextColor.GREEN));
             }

@@ -21,6 +21,7 @@ public class RoleReveal {
     }
 
     public void revealRole(Game gameState) {
+        System.out.println("3.Hi");
         List<Player> players = gameState.toPlayerObjectList(gameState.getPlayers());
         List<Player> imposterList = gameState.toPlayerObjectList(gameState.getInfected());
 

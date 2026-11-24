@@ -12,7 +12,6 @@ import java.util.List;
 public class InnocentDeath implements DeathObserver {
     @Override
     public void onDeathEvent(Player player, Game gameState, Plugin plugin) {
-        //List<Player> innocents = gameState.toPlayerObjectList(gameState.getInnocents());
         List<Player> infected = gameState.toPlayerObjectList(gameState.getInfected());
 
         if (!gameState.getInnocents().contains(player.getUniqueId())) {
@@ -38,6 +37,12 @@ public class InnocentDeath implements DeathObserver {
         // Calculate distance of the player who died to the imposter
         boolean activateConversion = false;
         for (Player p : infected) {
+            // Ensure an infected player doesn't infect themselves
+            if (p.equals(player)) {
+                System.out.println("Bug with innocents list");
+                return;
+            }
+
             impX = p.getLocation().getX();
             impY = p.getLocation().getY();
             impZ = p.getLocation().getZ();
@@ -61,19 +66,23 @@ public class InnocentDeath implements DeathObserver {
         // else set innocent to spectator
         if (!activateConversion) {
             player.setGameMode(GameMode.SPECTATOR);
-            gameState.removeFromInnocents(player.getUniqueId());
-        }
 
-        // Inform if imposters have won
-        if (gameState.getInnocents().isEmpty()) {
-            for (Player p : gameState.toPlayerObjectList(gameState.getPlayers())) {
-                p.sendMessage(Component.text("Imposters have won!").color(NamedTextColor.RED));
-            }
+            // TODO: work out how to remove players from innocents team
+            //gameState.removeFromInnocents(player.getUniqueId());
         }
 
         // Activate a respawn event a tick later
-        // ** DOESN'T WORK? - RESPAWNS WRONG POSITION? **
         player.setRespawnLocation(player.getLocation());
-        Bukkit.getScheduler().runTaskLater(plugin, () -> player.spigot().respawn(), 1L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            player.spigot().respawn();
+
+            // Inform if imposters have won
+            System.out.println("2.Hi");
+            if (gameState.getInfected().size() == gameState.getPlayers().size()) {
+                for (Player p : gameState.toPlayerObjectList(gameState.getPlayers())) {
+                    p.sendMessage(Component.text("Imposters have won!").color(NamedTextColor.RED));
+                }
+            }
+        }, 1L);
     }
 }

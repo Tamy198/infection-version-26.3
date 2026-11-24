@@ -24,7 +24,7 @@ public class InfectionCommand implements BasicCommand {
     @Override
     public void execute(CommandSourceStack source, String[] args)
             throws CommandSyntaxException {
-        if (!(source.getExecutor() instanceof Player player)) {
+        if (!(source.getExecutor() instanceof Player)) {
             source.getSender().sendMessage(
                     Component.text("Only players can send commands"));
             return;
