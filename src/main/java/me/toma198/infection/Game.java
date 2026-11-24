@@ -1,5 +1,7 @@
 package me.toma198.infection;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -27,12 +29,10 @@ public class Game {
     }
 
     public List<UUID> getInfected() {
-        if (infected.isEmpty()) return null;
         return new ArrayList<>(infected);
     }
 
     public List<UUID> getInnocents() {
-        if (innocents.isEmpty()) return null;
         return new ArrayList<>(innocents);
     }
 
@@ -94,5 +94,25 @@ public class Game {
         if (players.size() > 1) {
             innocents = new HashSet<>(playerRandomisation.subList(infectedCount, players.size()));
         }
+    }
+
+    public void infectedWin() {
+        for (Player player : toPlayerObjectList(new ArrayList<>(players))) {
+            player.sendMessage(Component.text("Imposters have won!").color(NamedTextColor.RED));
+        }
+        resetGame();
+    }
+
+    public void innocentsWin() {
+        for (Player player : toPlayerObjectList(new ArrayList<>(players))) {
+            player.sendMessage(Component.text("Innocents have won!").color(NamedTextColor.GREEN));
+        }
+        resetGame();
+    }
+
+    public void resetGame() {
+        infected.clear();
+        innocents.clear();
+        conversionList.clear();
     }
 }

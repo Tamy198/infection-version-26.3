@@ -12,8 +12,12 @@ import java.util.List;
 public class InnocentDeath implements DeathObserver {
     @Override
     public void onDeathEvent(Player player, Game gameState, Plugin plugin) {
+        System.out.println("2. Infected death");
+
         List<Player> infected = gameState.toPlayerObjectList(gameState.getInfected());
 
+        // Even if infected is empty, the dead player (imposter if infected is empty)
+        // shouldn't be innocent/in the innocent list
         if (!gameState.getInnocents().contains(player.getUniqueId())) {
             return;
         }
@@ -69,20 +73,15 @@ public class InnocentDeath implements DeathObserver {
 
             // TODO: work out how to remove players from innocents team
             //gameState.removeFromInnocents(player.getUniqueId());
+
+            // Inform if imposters have won
+            if (gameState.getInfected().size() == gameState.getPlayers().size()) {
+                gameState.infectedWin();
+            }
         }
 
         // Activate a respawn event a tick later
         player.setRespawnLocation(player.getLocation());
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            player.spigot().respawn();
-
-            // Inform if imposters have won
-            System.out.println("2.Hi");
-            if (gameState.getInfected().size() == gameState.getPlayers().size()) {
-                for (Player p : gameState.toPlayerObjectList(gameState.getPlayers())) {
-                    p.sendMessage(Component.text("Imposters have won!").color(NamedTextColor.RED));
-                }
-            }
-        }, 1L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> player.spigot().respawn(), 1L);
     }
 }

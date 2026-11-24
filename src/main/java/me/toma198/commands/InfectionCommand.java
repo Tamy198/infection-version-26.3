@@ -57,6 +57,8 @@ public class InfectionCommand implements BasicCommand {
             return;
         }
 
+        gameState.resetGame();
+
         gameState.assignInfected(infectedCount);
 
         RoleReveal roles = new RoleReveal(plugin);

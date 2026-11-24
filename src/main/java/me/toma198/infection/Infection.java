@@ -20,8 +20,11 @@ public class Infection extends JavaPlugin {
 
         DeathListener deathListener = new DeathListener(gameState, this);
 
+        // Infected death should run before innocent death as conversion could switch innocent
+        // to infected and then death will run twice, defeating the purpose of decoupling
         InfectedDeath infectedDeath = new InfectedDeath();
         deathListener.addDeathObserver(infectedDeath);
+
         InnocentDeath innocentDeath = new InnocentDeath();
         deathListener.addDeathObserver(innocentDeath);
 

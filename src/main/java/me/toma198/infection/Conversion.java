@@ -61,11 +61,9 @@ public class Conversion implements RespawnObserver {
             System.out.println("Conversion list: " + gameState.getConversionList());
             //System.out.println("Innocent list: " + gameState.getInnocents());
 
-            // Inform if imposters have won
+            // Inform if imposters have won (with suspense after the conversion lol)
             if (gameState.getInfected().size() == gameState.getPlayers().size()) {
-                for (Player p : gameState.toPlayerObjectList(gameState.getPlayers())) {
-                    p.sendMessage(Component.text("Imposters have won!").color(NamedTextColor.RED));
-                }
+                gameState.infectedWin();
             }
         }, 600L);
     }

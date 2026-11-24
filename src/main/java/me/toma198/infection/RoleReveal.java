@@ -21,7 +21,6 @@ public class RoleReveal {
     }
 
     public void revealRole(Game gameState) {
-        System.out.println("3.Hi");
         List<Player> players = gameState.toPlayerObjectList(gameState.getPlayers());
         List<Player> imposterList = gameState.toPlayerObjectList(gameState.getInfected());
 
@@ -88,6 +87,9 @@ public class RoleReveal {
                                     .color(NamedTextColor.RED));
                         }
                         System.out.println("Executed after 4 second delay!");
+                        System.out.println("Player list: " + players);
+                        System.out.println("Infected list: " + imposterList);
+                        System.out.println("Innocent list: " + innocentList);
 
                         Bukkit.getScheduler().runTaskLater(plugin, () -> {
                             for (Player player : innocentList) {
