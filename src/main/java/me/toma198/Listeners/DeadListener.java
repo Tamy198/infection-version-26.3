@@ -39,8 +39,6 @@ public class DeadListener implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
         Player dead = e.getEntity();
-        System.out.println(dead.getName() + " has died!");
-
         notifyDeathObservers(dead);
     }
 }

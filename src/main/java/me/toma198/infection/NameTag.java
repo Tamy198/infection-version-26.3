@@ -10,11 +10,6 @@ import java.util.UUID;
 
 public class NameTag {
     public static void removeNameTags(Player player) {
-        //ScoreboardTeam team = new ScoreboardTeam(((CraftScoreboard)
-        //        Bukkit.getScoreboardManager().getMainScoreboard()).getHandle(), "");
-        //Player player = Bukkit.getPlayer("Toma198");
-        //player.setCustomNameVisible(true);
-
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         if (manager == null) return;
 

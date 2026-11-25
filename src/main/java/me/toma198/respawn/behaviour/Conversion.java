@@ -14,16 +14,7 @@ public class Conversion implements RespawnObserver {
 
     @Override
     public void onRespawnEvent(Player player, Game gameState, Plugin plugin) {
-        System.out.println("In conversion class");
-        System.out.println(player.getUniqueId());
-        System.out.println("Player list: " + gameState.getPlayers());
-        System.out.println("Infected list: " + gameState.getInfected());
-        System.out.println("Conversion list: " + gameState.getConversionList());
-        //System.out.println("Innocent list: " + gameState.getInnocents());
-
         if (!(gameState.getConversionList().contains(player.getUniqueId()))) {
-            //gameState.removeFromConversionList(player.getUniqueId());
-            System.out.println("Didn't run conversion");
             return;
         }
 
@@ -47,13 +38,8 @@ public class Conversion implements RespawnObserver {
         // Join the imposter team
         gameState.addToInfected(player.getUniqueId());
 
-        // TODO: work out how to remove players from the innocents team
-        //gameState.removeFromInnocents(player.getUniqueId());
-
         // Conversion lasts 30 seconds
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            System.out.println("Executed potion removal after 30 seconds!");
-
             player.removePotionEffect(PotionEffectType.SLOWNESS);
             player.removePotionEffect(PotionEffectType.RESISTANCE);
             player.removePotionEffect(PotionEffectType.REGENERATION);
@@ -61,11 +47,6 @@ public class Conversion implements RespawnObserver {
             gameState.removeFromConversionList(player.getUniqueId());
 
             //player.setWalkSpeed(DEFAULT_MOVEMENT_SPEED);
-
-            System.out.println("Player list: " + gameState.getPlayers());
-            System.out.println("Infected list: " + gameState.getInfected());
-            System.out.println("Conversion list: " + gameState.getConversionList());
-            //System.out.println("Innocent list: " + gameState.getInnocents());
 
             // Inform if imposters have won (with suspense after the conversion lol)
             if (gameState.getInfected().size() == gameState.getPlayers().size()) {
@@ -76,8 +57,6 @@ public class Conversion implements RespawnObserver {
 
     // Apply freezing every tick for 30 seconds
     private void freezing(Player player, Plugin plugin) {
-        System.out.println("Freezing method ran");
-
         new BukkitRunnable() {
             int ticks = 0;
 

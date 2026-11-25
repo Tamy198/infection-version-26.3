@@ -39,18 +39,17 @@ public class RoleReveal {
                 .color(NamedTextColor.GOLD);
 
         // Countdown and imposter reveal
-        printRoleTitle(threeSecondCountDown, players);
+        printTitle(threeSecondCountDown, players);
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            printRoleTitle(twoSecondCountDown, players);
-            System.out.println("Executed after delay!");
+            printTitle(twoSecondCountDown, players);
 
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                printRoleTitle(oneSecondCountDown, players);
+                printTitle(oneSecondCountDown, players);
 
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
                     // Inform imposters of their dubiousness
-                    printRoleTitle(Component.text("You are the imposter")
+                    printTitle(Component.text("You are the imposter")
                             .color(NamedTextColor.RED), imposterList);
                     for (Player player : imposterList) {
                         player.sendMessage(Component.text("You are the imposter, " +
@@ -59,7 +58,7 @@ public class RoleReveal {
                     }
 
                     // Inform innocents of their innocence
-                    printRoleTitle(Component.text("You are NOT the imposter:)")
+                    printTitle(Component.text("You are NOT the imposter:)")
                             .color(NamedTextColor.GREEN), innocentList);
                     for (Player player : innocentList) {
                         player.sendMessage(Component.text("You are innocent:)")
@@ -67,7 +66,6 @@ public class RoleReveal {
                         player.playSound(player.getLocation(), Sound.ITEM_GOAT_HORN_SOUND_0,
                                 1000f, 1f);
                     }
-                    System.out.println("Executed after delay!");
 
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
                         // Reveal the imposters to one another
@@ -76,7 +74,6 @@ public class RoleReveal {
                             imposterReveal.append(imposter.getName());
                         }
 
-                        // TODO: comma in name
                         if (imposterReveal.lastIndexOf(",") != -1) {
                             imposterReveal.deleteCharAt(imposterReveal.lastIndexOf(","));
                         }
@@ -86,24 +83,20 @@ public class RoleReveal {
                             player.sendMessage(Component.text(imposterReveal.toString())
                                     .color(NamedTextColor.RED));
                         }
-                        System.out.println("Executed after 4 second delay!");
-                        System.out.println("Player list: " + players);
-                        System.out.println("Infected list: " + imposterList);
-                        System.out.println("Innocent list: " + innocentList);
 
                         for (Player player : innocentList) {
                             player.sendMessage(gameplayReminder);
                         }
-                    }, 80L); // 3+4 second delay
-                }, 20L); // 1+1+1 second
-            }, 20L); // 1+1 second delay
-        }, 20L); // 1 second delay
+                    }, 80L); // 6+4 second delay
+                }, 40L); // 2+2+2 second
+            }, 40L); // 2+2 second delay
+        }, 40L); // 2 second delay
     }
 
     // Send role information to players
-    private void printRoleTitle(TextComponent message, List<Player> playerList) {
+    private void printTitle(TextComponent message, List<Player> playerList) {
         for (Player player : playerList) {
-            final Title.Times times = Title.Times.times(Duration.ofMillis(100), Duration.ofMillis(600),
+            final Title.Times times = Title.Times.times(Duration.ofMillis(100), Duration.ofMillis(1600),
                     Duration.ofMillis(200));
             final Title title = Title.title(message, Component.empty(), times);
 

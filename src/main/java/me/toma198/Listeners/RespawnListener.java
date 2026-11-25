@@ -47,18 +47,8 @@ public class RespawnListener implements Listener {
         // the client
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 player.teleport(location);
-                player.closeInventory();
             }, 1L);
 
-        System.out.println("Conversion class should be notified upon respawning");
         notifyRespawnObservers(player);
-
-        /*
-        if (gameState.getConversionList().contains(player.getUniqueId())) {
-            //gameState.removeFromConversionList(player.getUniqueId());
-
-            new Conversion().onRespawnEvent(player, gameState, plugin);
-        }
-         */
     }
 }

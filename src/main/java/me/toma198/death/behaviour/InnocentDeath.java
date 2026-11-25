@@ -11,8 +11,6 @@ import java.util.List;
 public class InnocentDeath implements DeathObserver {
     @Override
     public void onDeathEvent(Player player, Game gameState, Plugin plugin) {
-        System.out.println("2. Innocent death");
-
         List<Player> infected = gameState.toPlayerObjectList(gameState.getInfected());
 
         // Even if infected is empty, the dead player (imposter if infected is empty)
@@ -60,9 +58,6 @@ public class InnocentDeath implements DeathObserver {
             if (distFromImp <= 30) {
                 activateConversion = true;
                 gameState.addToConversionList(player.getUniqueId());
-
-                System.out.println("Conversion should run");
-                System.out.println("Conversion list: " + gameState.getConversionList());
             }
         }
 
@@ -70,7 +65,6 @@ public class InnocentDeath implements DeathObserver {
         if (!activateConversion) {
             player.setGameMode(GameMode.SPECTATOR);
 
-            // TODO: work out how to remove players from innocents team
             //gameState.removeFromInnocents(player.getUniqueId());
 
             // Inform if imposters have won
@@ -82,5 +76,6 @@ public class InnocentDeath implements DeathObserver {
         // Activate a respawn event a tick later
         player.setRespawnLocation(player.getLocation());
         Bukkit.getScheduler().runTaskLater(plugin, () -> player.spigot().respawn(), 1L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> player.closeInventory(), 2L);
     }
 }

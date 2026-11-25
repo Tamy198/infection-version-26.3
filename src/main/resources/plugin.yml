@@ -1,6 +1,6 @@
 name: infection
 description: $description
-version: '1.0-SNAPSHOT'
+version: '1.0'
 
 main: me.toma198.infection.Infection
 api-version: '26.3'

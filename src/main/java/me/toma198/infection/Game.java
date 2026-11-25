@@ -20,10 +20,6 @@ public class Game {
     private final List<UUID> conversionList = new ArrayList<>();
 
     public List<UUID> getPlayers() {
-        for (UUID player : players) {
-            System.out.println("Player list: " + player.toString());
-        }
-
         // Copy player list to ensure we aren't exposing the original to mutation outside the class
         return new ArrayList<>(players);
     }
