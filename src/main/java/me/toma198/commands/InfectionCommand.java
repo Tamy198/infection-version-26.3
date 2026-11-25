@@ -4,6 +4,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import me.toma198.infection.Game;
+import me.toma198.infection.NameTag;
 import me.toma198.infection.RoleReveal;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
@@ -60,6 +61,10 @@ public class InfectionCommand implements BasicCommand {
         gameState.resetGame();
 
         gameState.assignInfected(infectedCount);
+
+        for (Player player : gameState.toPlayerObjectList(gameState.getPlayers())) {
+            NameTag.removeNameTags(player);
+        }
 
         RoleReveal roles = new RoleReveal(plugin);
         roles.revealRole(gameState);

@@ -1,5 +1,6 @@
-package me.toma198.infection;
+package me.toma198.death.behaviour;
 
+import me.toma198.infection.Game;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;

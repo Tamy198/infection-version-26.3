@@ -1,7 +1,6 @@
-package me.toma198.infection;
+package me.toma198.death.behaviour;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import me.toma198.infection.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -12,7 +11,7 @@ import java.util.List;
 public class InnocentDeath implements DeathObserver {
     @Override
     public void onDeathEvent(Player player, Game gameState, Plugin plugin) {
-        System.out.println("2. Infected death");
+        System.out.println("2. Innocent death");
 
         List<Player> infected = gameState.toPlayerObjectList(gameState.getInfected());
 

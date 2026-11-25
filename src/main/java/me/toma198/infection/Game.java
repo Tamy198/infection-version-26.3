@@ -99,6 +99,7 @@ public class Game {
     public void infectedWin() {
         for (Player player : toPlayerObjectList(new ArrayList<>(players))) {
             player.sendMessage(Component.text("Imposters have won!").color(NamedTextColor.RED));
+            NameTag.reviveNameTags(player);
         }
         resetGame();
     }
@@ -106,6 +107,7 @@ public class Game {
     public void innocentsWin() {
         for (Player player : toPlayerObjectList(new ArrayList<>(players))) {
             player.sendMessage(Component.text("Innocents have won!").color(NamedTextColor.GREEN));
+            NameTag.reviveNameTags(player);
         }
         resetGame();
     }

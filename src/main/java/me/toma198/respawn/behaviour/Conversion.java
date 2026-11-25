@@ -1,7 +1,6 @@
-package me.toma198.infection;
+package me.toma198.respawn.behaviour;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import me.toma198.infection.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -11,6 +10,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Conversion implements RespawnObserver {
+    private static final float DEFAULT_MOVEMENT_SPEED = 0.2f;
+
     @Override
     public void onRespawnEvent(Player player, Game gameState, Plugin plugin) {
         System.out.println("In conversion class");
@@ -52,9 +53,14 @@ public class Conversion implements RespawnObserver {
         // Conversion lasts 30 seconds
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             System.out.println("Executed potion removal after 30 seconds!");
+
             player.removePotionEffect(PotionEffectType.SLOWNESS);
             player.removePotionEffect(PotionEffectType.RESISTANCE);
             player.removePotionEffect(PotionEffectType.REGENERATION);
+
+            gameState.removeFromConversionList(player.getUniqueId());
+
+            //player.setWalkSpeed(DEFAULT_MOVEMENT_SPEED);
 
             System.out.println("Player list: " + gameState.getPlayers());
             System.out.println("Infected list: " + gameState.getInfected());

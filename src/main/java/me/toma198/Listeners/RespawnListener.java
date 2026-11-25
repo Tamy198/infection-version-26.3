@@ -1,8 +1,7 @@
 package me.toma198.Listeners;
 
-import me.toma198.infection.Conversion;
 import me.toma198.infection.Game;
-import me.toma198.infection.RespawnObserver;
+import me.toma198.respawn.behaviour.RespawnObserver;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -46,7 +45,10 @@ public class RespawnListener implements Listener {
 
         // Delay teleportation to where they died until after the player respawns relative to
         // the client
-        Bukkit.getScheduler().runTaskLater(plugin, () -> player.teleport(location), 1L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                player.teleport(location);
+                player.closeInventory();
+            }, 1L);
 
         System.out.println("Conversion class should be notified");
         notifyRespawnObservers(player);

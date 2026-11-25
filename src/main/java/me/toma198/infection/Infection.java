@@ -1,9 +1,10 @@
 package me.toma198.infection;
 
-import me.toma198.Listeners.ConnectionListener;
-import me.toma198.Listeners.DeathListener;
-import me.toma198.Listeners.RespawnListener;
+import me.toma198.death.behaviour.InfectedDeath;
+import me.toma198.death.behaviour.InnocentDeath;
+import me.toma198.Listeners.*;
 import me.toma198.commands.InfectionCommand;
+import me.toma198.respawn.behaviour.Conversion;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -18,7 +19,8 @@ public class Infection extends JavaPlugin {
 
         registerCommand("infection", List.of("i"), new InfectionCommand(this, gameState));
 
-        DeathListener deathListener = new DeathListener(gameState, this);
+        //DeathListener deathListener = new DeathListener(gameState, this);
+        DeadListener deathListener = new DeadListener(gameState, this);
 
         // Infected death should run before innocent death as conversion could switch innocent
         // to infected and then death will run twice, defeating the purpose of decoupling
@@ -37,6 +39,8 @@ public class Infection extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ConnectionListener(gameState), this);
         getServer().getPluginManager().registerEvents(deathListener, this);
         getServer().getPluginManager().registerEvents(respawnListener, this);
+        getServer().getPluginManager().registerEvents(new JumpListener(gameState), this);
+        getServer().getPluginManager().registerEvents(new MovementListener(gameState), this);
     }
 
     @Override

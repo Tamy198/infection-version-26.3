@@ -91,11 +91,9 @@ public class RoleReveal {
                         System.out.println("Infected list: " + imposterList);
                         System.out.println("Innocent list: " + innocentList);
 
-                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                            for (Player player : innocentList) {
-                                player.sendMessage(gameplayReminder);
-                            }
-                        }, 60L); // 3+4+3 second delay
+                        for (Player player : innocentList) {
+                            player.sendMessage(gameplayReminder);
+                        }
                     }, 80L); // 3+4 second delay
                 }, 20L); // 1+1+1 second
             }, 20L); // 1+1 second delay
