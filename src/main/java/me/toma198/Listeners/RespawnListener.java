@@ -50,7 +50,7 @@ public class RespawnListener implements Listener {
                 player.closeInventory();
             }, 1L);
 
-        System.out.println("Conversion class should be notified");
+        System.out.println("Conversion class should be notified upon respawning");
         notifyRespawnObservers(player);
 
         /*

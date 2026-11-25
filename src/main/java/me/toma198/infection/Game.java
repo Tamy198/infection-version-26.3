@@ -89,8 +89,10 @@ public class Game {
         List<UUID> playerRandomisation = new ArrayList<>(players);
 
         // Ensures infected list is randomly selected every time the infection command is run
-        Collections.shuffle(playerRandomisation);
+        Random random = new Random();
+        Collections.shuffle(playerRandomisation, random);
         infected = new HashSet<>(playerRandomisation.subList(0, infectedCount));
+
         if (players.size() > 1) {
             innocents = new HashSet<>(playerRandomisation.subList(infectedCount, players.size()));
         }
