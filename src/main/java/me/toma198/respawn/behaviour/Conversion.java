@@ -49,7 +49,8 @@ public class Conversion implements RespawnObserver {
             //player.setWalkSpeed(DEFAULT_MOVEMENT_SPEED);
 
             // Inform if imposters have won (with suspense after the conversion lol)
-            if (gameState.getInfected().size() == gameState.getPlayers().size()) {
+            if (gameState.getInfected().size() >=
+                    gameState.getPlayers().size() - gameState.getDead().size()) {
                 gameState.infectedWin();
             }
         }, 600L);

@@ -66,9 +66,11 @@ public class InnocentDeath implements DeathObserver {
             player.setGameMode(GameMode.SPECTATOR);
 
             //gameState.removeFromInnocents(player.getUniqueId());
+            gameState.addToDead(player.getUniqueId());
 
             // Inform if imposters have won
-            if (gameState.getInfected().size() == gameState.getPlayers().size()) {
+            if (gameState.getInfected().size() >=
+                    gameState.getPlayers().size() - gameState.getDead().size()) {
                 gameState.infectedWin();
             }
         }

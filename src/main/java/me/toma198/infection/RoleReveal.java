@@ -72,6 +72,7 @@ public class RoleReveal {
                         StringBuilder imposterReveal = new StringBuilder("The imposters are: ");
                         for (Player imposter : imposterList) {
                             imposterReveal.append(imposter.getName());
+                            imposterReveal.append(", ");
                         }
 
                         if (imposterReveal.lastIndexOf(",") != -1) {

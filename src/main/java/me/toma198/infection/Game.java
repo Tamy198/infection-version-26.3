@@ -15,6 +15,7 @@ public class Game {
     private final Set<UUID> players = new HashSet<>();
     private Set<UUID> infected = new HashSet<>();
     private Set<UUID> innocents = new HashSet<>();
+    private final Set<UUID> dead = new HashSet<>();
 
     // To track who needs to be converted
     private final List<UUID> conversionList = new ArrayList<>();
@@ -30,6 +31,10 @@ public class Game {
 
     public List<UUID> getInnocents() {
         return new ArrayList<>(innocents);
+    }
+
+    public List<UUID> getDead() {
+        return new ArrayList<>(dead);
     }
 
     public List<UUID> getConversionList() {
@@ -73,6 +78,14 @@ public class Game {
         innocents.remove(player);
     }
 
+    public void addToDead(UUID player) {
+        dead.add(player);
+    }
+
+    public void removeFromDead(UUID player) {
+        dead.add(player);
+    }
+
     public void addToConversionList(UUID player) {
         conversionList.add(player);
     }
@@ -95,7 +108,8 @@ public class Game {
     }
 
     public void infectedWin() {
-        for (Player player : toPlayerObjectList(new ArrayList<>(players))) {
+        // Use online players to avoid error with disconnects
+        for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendMessage(Component.text("Imposters have won!").color(NamedTextColor.RED));
             NameTag.reviveNameTags(player);
         }
@@ -103,7 +117,7 @@ public class Game {
     }
 
     public void innocentsWin() {
-        for (Player player : toPlayerObjectList(new ArrayList<>(players))) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendMessage(Component.text("Innocents have won!").color(NamedTextColor.GREEN));
             NameTag.reviveNameTags(player);
         }
@@ -113,6 +127,7 @@ public class Game {
     public void resetGame() {
         infected.clear();
         innocents.clear();
+        dead.clear();
         conversionList.clear();
     }
 }
