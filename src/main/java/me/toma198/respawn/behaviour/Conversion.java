@@ -15,8 +15,6 @@ public class Conversion implements RespawnObserver {
 
     @Override
     public void onRespawnEvent(Player player, Game gameState, Plugin plugin) {
-        System.out.println("In conversion class");
-
         // Non-infected innocent death
         if (!(gameState.getConversionList().contains(player.getUniqueId()))) {
             player.setGameMode(GameMode.SPECTATOR);
@@ -45,8 +43,6 @@ public class Conversion implements RespawnObserver {
 
         // Conversion lasts 30 seconds
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            System.out.println("Conversion ran");
-
             player.removePotionEffect(PotionEffectType.SLOWNESS);
             player.removePotionEffect(PotionEffectType.RESISTANCE);
             player.removePotionEffect(PotionEffectType.REGENERATION);
