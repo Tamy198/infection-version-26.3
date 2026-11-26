@@ -2,8 +2,8 @@ package me.toma198.infection;
 
 import me.toma198.death.behaviour.InfectedDeath;
 import me.toma198.death.behaviour.InnocentDeath;
-import me.toma198.Listeners.*;
 import me.toma198.commands.InfectionCommand;
+import me.toma198.listener.*;
 import me.toma198.respawn.behaviour.Conversion;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -41,6 +41,7 @@ public class Infection extends JavaPlugin {
         getServer().getPluginManager().registerEvents(respawnListener, this);
         getServer().getPluginManager().registerEvents(new JumpListener(gameState), this);
         getServer().getPluginManager().registerEvents(new MovementListener(gameState), this);
+        getServer().getPluginManager().registerEvents(new KillListener(gameState), this);
     }
 
     @Override

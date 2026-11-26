@@ -1,4 +1,4 @@
-package me.toma198.Listeners;
+package me.toma198.listener;
 
 import me.toma198.death.behaviour.DeathObserver;
 import me.toma198.infection.Game;

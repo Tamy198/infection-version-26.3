@@ -36,7 +36,7 @@ public class InnocentDeath implements DeathObserver {
         double distFromImp;
 
         // Calculate distance of the player who died to the imposter
-        boolean activateConversion = false;
+        //boolean activateConversion = false;
         for (Player p : infected) {
             // Ensure an infected player doesn't infect themselves
             if (p.equals(player)) {
@@ -54,17 +54,16 @@ public class InnocentDeath implements DeathObserver {
 
             distFromImp = Math.sqrt(absX + absY + absZ);
 
-            // if within 30 blocks, begin conversion to imposter
+            // if within 30 blocks, player gets infected by the infectious disease which is always
+            // contracted from within 30 blocks away from an infected
             if (distFromImp <= 30) {
-                activateConversion = true;
+                //activateConversion = true;
                 gameState.addToConversionList(player.getUniqueId());
             }
         }
 
-        // else set innocent to spectator
-        if (!activateConversion) {
-            player.setGameMode(GameMode.SPECTATOR);
-
+        // else set innocent to dead
+        if (!gameState.getConversionList().contains(player.getUniqueId())) {
             //gameState.removeFromInnocents(player.getUniqueId());
             gameState.addToDead(player.getUniqueId());
 
@@ -78,6 +77,6 @@ public class InnocentDeath implements DeathObserver {
         // Activate a respawn event a tick later
         player.setRespawnLocation(player.getLocation());
         Bukkit.getScheduler().runTaskLater(plugin, () -> player.spigot().respawn(), 1L);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> player.closeInventory(), 2L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> player.closeInventory(), 5L);
     }
 }

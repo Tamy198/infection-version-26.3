@@ -18,7 +18,7 @@ public class Game {
     private final Set<UUID> dead = new HashSet<>();
 
     // To track who needs to be converted
-    private final List<UUID> conversionList = new ArrayList<>();
+    private final Set<UUID> conversionList = new HashSet<>();
 
     public List<UUID> getPlayers() {
         // Copy player list to ensure we aren't exposing the original to mutation outside the class
@@ -47,16 +47,6 @@ public class Game {
                 .collect(Collectors.toList());
     }
 
-    /* Might expose internal workings of the class??
-    public void addPlayer(UUID player, List<UUID> list) {
-        list.add(player);
-    }
-
-    public void removePlayer(UUID player, List<UUID> list) {
-        list.remove(player);
-    }
-     */
-
     public void addToPlayers(UUID player) {
         players.add(player);
     }
@@ -67,7 +57,6 @@ public class Game {
 
     public void addToInfected(UUID player) {
         infected.add(player);
-        //innocentsToRemove.add(player);
     }
 
     public void removeFromInfected(UUID player) {

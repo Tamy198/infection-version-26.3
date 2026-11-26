@@ -2,6 +2,7 @@ package me.toma198.respawn.behaviour;
 
 import me.toma198.infection.Game;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -14,7 +15,11 @@ public class Conversion implements RespawnObserver {
 
     @Override
     public void onRespawnEvent(Player player, Game gameState, Plugin plugin) {
+        System.out.println("In conversion class");
+
+        // Non-infected innocent death
         if (!(gameState.getConversionList().contains(player.getUniqueId()))) {
+            player.setGameMode(GameMode.SPECTATOR);
             return;
         }
 
@@ -40,6 +45,8 @@ public class Conversion implements RespawnObserver {
 
         // Conversion lasts 30 seconds
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            System.out.println("Conversion ran");
+
             player.removePotionEffect(PotionEffectType.SLOWNESS);
             player.removePotionEffect(PotionEffectType.RESISTANCE);
             player.removePotionEffect(PotionEffectType.REGENERATION);

@@ -75,6 +75,7 @@ public class RoleReveal {
                             imposterReveal.append(", ");
                         }
 
+                        // Removes comma at the end of the list
                         if (imposterReveal.lastIndexOf(",") != -1) {
                             imposterReveal.deleteCharAt(imposterReveal.lastIndexOf(","));
                         }
