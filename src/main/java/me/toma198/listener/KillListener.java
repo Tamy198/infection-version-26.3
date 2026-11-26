@@ -18,7 +18,6 @@ public class KillListener implements Listener {
 
     @EventHandler
     public void onKill(EntityDamageByEntityEvent e) {
-        System.out.println("Entity damage event");
         // Direct kill
         if (e.getEntityType() == EntityType.PLAYER) {
             Entity attacker = e.getDamager();
@@ -33,6 +32,7 @@ public class KillListener implements Listener {
                 }
             }, 1L);
              */
+
             if (victimDeath && gameState.getInfected().contains(attacker.getUniqueId())) {
                 gameState.addToConversionList(victim.getUniqueId());
             }
