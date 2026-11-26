@@ -24,10 +24,7 @@ public class KillListener implements Listener {
             Entity attacker = e.getDamager();
             Player victim = Bukkit.getPlayer(e.getEntity().getUniqueId());
 
-            System.out.println("Victim health: " + victim.getHealth() + " finale damage: " + e.getDamage());
             boolean victimDeath = (victim.getHealth() - e.getDamage()) <= 0;
-            System.out.println("Registered victim death: " + victimDeath + " of " + victim);
-            System.out.println("Attacker: " + attacker);
 
             /*
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
@@ -36,10 +33,8 @@ public class KillListener implements Listener {
                 }
             }, 1L);
              */
-            System.out.println("hi: " + gameState.getInfected().contains(attacker.getUniqueId()));
             if (victimDeath && gameState.getInfected().contains(attacker.getUniqueId())) {
                 gameState.addToConversionList(victim.getUniqueId());
-                System.out.println("Should run conversion");
             }
         }
     }

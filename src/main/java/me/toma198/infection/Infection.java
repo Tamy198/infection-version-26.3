@@ -20,7 +20,7 @@ public class Infection extends JavaPlugin {
         registerCommand("infection", List.of("i"), new InfectionCommand(this, gameState));
 
         //DeathListener deathListener = new DeathListener(gameState, this);
-        DeadListener deathListener = new DeadListener(gameState, this);
+        DeathListener deathListener = new DeathListener(gameState, this);
 
         // Infected death should run before innocent death as conversion could switch innocent
         // to infected and then death will run twice, defeating the purpose of decoupling
